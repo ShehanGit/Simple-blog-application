@@ -1,38 +1,38 @@
+// Update the "Add New Post" Link in the HomePage component to navigate to the AddPostPage by providing the correct href
+
 "use client";
 
-// pages/index.tsx
+// pages/page.tsx
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '../app/components/Navbar';
 import { BlogPost } from '../app/types';
-
-const mockPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: 'First Post',
-    excerpt: 'This is the excerpt for the first post.',
-    content: 'This is the content for the first post.',
-    author: 'Author 1'
-  },
-  {
-    id: '2',
-    title: 'Second Post',
-    excerpt: 'This is the excerpt for the second post.',
-    content: 'This is the content for the second post.',
-    author: 'Author 2'
-  }
-];
+import { useRouter } from 'next/navigation';
 
 const HomePage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    // Simulate fetching posts from a backend
-    setTimeout(() => {
-      setPosts(mockPosts);
-      setLoading(false);
-    }, 1000);
+    // Fetch posts from the API
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+        } else {
+          console.error('Failed to fetch posts');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching posts', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   if (loading) {
@@ -59,9 +59,13 @@ const HomePage = () => {
             ))}
           </div>
         )}
-        <Link href="/add-post" className="mt-8 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        {/* Update the onClick to navigate to the correct AddPostPage route */}
+        <button
+          onClick={() => router.push('/add')}
+          className="mt-8 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        >
           Add New Post
-        </Link>
+        </button>
       </div>
     </div>
   );

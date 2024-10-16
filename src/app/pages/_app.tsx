@@ -1,7 +1,9 @@
 import { BlogProvider } from '../context/BlogContext';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }) {
+import { AppProps } from 'next/app';
+
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <BlogProvider>
       <Component {...pageProps} />
