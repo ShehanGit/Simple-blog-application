@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-
+import { useRouter } from 'next/navigation';
 
 const AddPostPage = () => {
   const [title, setTitle] = useState('');
@@ -76,12 +75,12 @@ const AddPostPage = () => {
             required
           />
         </div>
-        <button
+        {/* <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
           Add Post
-        </button>
+        </button> */}
       </form>
     </div>
   );

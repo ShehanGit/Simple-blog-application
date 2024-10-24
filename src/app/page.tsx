@@ -9,6 +9,8 @@ import Navbar from '../app/components/Navbar';
 import { BlogPost } from '../app/types';
 import { useRouter } from 'next/navigation';
 
+
+
 const HomePage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,12 +62,12 @@ const HomePage = () => {
           </div>
         )}
         {/* Update the onClick to navigate to the correct AddPostPage route */}
-        <button
+        {/* <button
           onClick={() => router.push('/add')}
           className="mt-8 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
           Add New Post
-        </button>
+        </button> */}
       </div>
     </div>
   );

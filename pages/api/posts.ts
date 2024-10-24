@@ -1,4 +1,4 @@
-// pages/api/posts.ts
+// pages/api/posts/index.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -12,25 +12,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   switch (method) {
     case 'GET':
+      // Return all posts
       res.status(200).json(posts);
       break;
     case 'POST':
+      // Add a new post
       const newPost = { ...req.body, id: posts.length + 1 };
       posts.push(newPost);
       res.status(201).json(newPost);
       break;
-    case 'PUT':
-      const { id } = req.body;
-      posts = posts.map(post => (post.id === id ? { ...post, ...req.body } : post));
-      res.status(200).json({ message: 'Post updated successfully' });
-      break;
-    case 'DELETE':
-      const { postId } = req.query;
-      posts = posts.filter(post => post.id !== parseInt(postId as string, 10));
-      res.status(200).json({ message: 'Post deleted successfully' });
-      break;
     default:
-      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+      res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
